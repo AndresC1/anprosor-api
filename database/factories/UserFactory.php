@@ -17,6 +17,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $roleCount = \App\Models\Role::count();
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
@@ -27,6 +28,7 @@ class UserFactory extends Factory
             'last_password_change_at' => null,
             'last_login_at' => null,
             'remember_token' => Str::random(10),
+            'role_id' => fake()->numberBetween(1, $roleCount),
         ];
     }
 
