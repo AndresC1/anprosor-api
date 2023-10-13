@@ -13,7 +13,8 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            ['name' => 'add_user', 'description' => 'Permiso para agregar usuarios']
+            ['name' => 'add_user', 'description' => 'Permiso para agregar usuarios'],
+            ['name' => 'view_list_user', 'description' => 'Permiso para ver lista de usuarios'],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
