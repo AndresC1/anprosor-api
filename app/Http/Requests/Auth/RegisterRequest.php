@@ -24,6 +24,7 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|email|unique:users,email',
+            'role_id' => 'required|exists:roles,id|integer',
         ];
     }
 
@@ -42,6 +43,9 @@ class RegisterRequest extends FormRequest
             'email.unique' => 'Email is already taken!',
             'name.min' => 'Name must be at least 3 characters!',
             'name.max' => 'Name must be at most 255 characters!',
+            'role_id.required' => 'Role is required!',
+            'role_id.exists' => 'Role not found!',
+            'role_id.integer' => 'Role has to be an integer!',
         ];
     }
 }
