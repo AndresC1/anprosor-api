@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\ChangeStatusRequest;
 use App\Http\Resources\User\InfoCleanUserResource;
 use App\Http\Resources\User\InfoUserResource;
 use App\Models\User;
@@ -37,6 +38,18 @@ class UserController extends Controller
                 'next' => $users->nextPageUrl(),
             ],
             'message' => 'List of users',
+            'status' => 200,
+        ]);
+    }
+
+    public function changeStatus(ChangeStatusRequest $request){
+        $user = User::find(request()->user_id);
+        $user->is_active = !$user->is_active;
+        $user->save();
+
+        return response()->json([
+            'user' => InfoCleanUserResource::make($user),
+            'message' => 'User status changed',
             'status' => 200,
         ]);
     }
