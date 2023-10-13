@@ -11,7 +11,7 @@ Route::prefix('v1')->group(function (){
     Route::middleware('auth:sanctum')->group(function (){
         // Authenticated
         Route::prefix('auth')->group(function (){
-            Route::post('/register', [AuthController::class, 'register']);
+            Route::post('/register', [AuthController::class, 'register'])->middleware('check_permission:add_user');
             Route::post('/logout', [AuthController::class, 'logout']);
         });
     });

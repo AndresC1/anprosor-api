@@ -52,6 +52,7 @@ class AuthController extends Controller
             'password' => Hash::make($password),
             'change_password' => false,
             'is_active' => true,
+            'role_id' => $request->role_id,
         ]);
 
         $user->save();

@@ -17,6 +17,7 @@ class RegisterResource extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
+            'role' => $this->role->name,
             'is_active' => $this->is_active,
             'created_at' => $this->created_at,
         ];
