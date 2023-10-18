@@ -21,6 +21,9 @@ class PermissionSeeder extends Seeder
             ['name' => 'add_silo', 'description' => 'Permiso para ver y agregar silos'],
             ['name' => 'edit_silo', 'description' => 'Permiso para editar silos'],
             ['name' => 'delete_silo', 'description' => 'Permiso para eliminar silos'],
+            ['name' => 'add_service', 'description' => 'Permiso para ver y agregar servicios'],
+            ['name' => 'edit_service', 'description' => 'Permiso para editar servicios'],
+            ['name' => 'delete_service', 'description' => 'Permiso para eliminar servicios'],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
