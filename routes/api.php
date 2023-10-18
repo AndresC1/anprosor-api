@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\GrainsController;
 use App\Http\Controllers\SiloController;
+use App\Http\Controllers\ServiceController;
 
 Route::prefix('v1')->group(function (){
     Route::prefix('auth')->group(function (){
@@ -41,6 +42,12 @@ Route::prefix('v1')->group(function (){
         Route::prefix('silo')->group(function (){
             Route::patch('/{silos}', [SiloController::class, 'update'])->middleware('check_permission:edit_silo');
             Route::delete('/{silo}', [SiloController::class, 'destroy'])->middleware('check_permission:delete_silo');
+        });
+        // Service
+        Route::apiResource('service', ServiceController::class)->only(['store', 'index'])->middleware('check_permission:add_service');
+        Route::prefix('service')->group(function (){
+            Route::patch('/{services}', [ServiceController::class, 'update'])->middleware('check_permission:edit_service');
+            Route::delete('/{services}', [ServiceController::class, 'destroy'])->middleware('check_permission:delete_service');
         });
     });
 });
