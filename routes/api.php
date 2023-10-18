@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\GrainsController;
 
 Route::prefix('v1')->group(function (){
     Route::prefix('auth')->group(function (){
@@ -27,6 +28,12 @@ Route::prefix('v1')->group(function (){
         // Role
         Route::prefix('role')->group(function (){
             Route::get('/list', [RoleController::class, 'index'])->middleware('check_permission:add_user');
+        });
+        // Grain
+        Route::apiResource('grain', GrainsController::class)->only(['index', 'store'])->middleware('check_permission:add_grain');
+        Route::prefix('grain')->group(function (){
+            Route::patch('/{grain}', [GrainsController::class, 'update'])->middleware('check_permission:edit_grain');
+            Route::delete('/{grain}', [GrainsController::class, 'destroy'])->middleware('check_permission:delete_grain');
         });
     });
 });
