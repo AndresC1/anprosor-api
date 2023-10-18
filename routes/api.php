@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\GrainsController;
+use App\Http\Controllers\SiloController;
 
 Route::prefix('v1')->group(function (){
     Route::prefix('auth')->group(function (){
@@ -31,10 +32,15 @@ Route::prefix('v1')->group(function (){
         });
         // Grain
         Route::apiResource('grain', GrainsController::class)->only(['store', 'index'])->middleware('check_permission:add_grain');
-//        Route::get('/grain', [GrainsController::class, 'index']);
         Route::prefix('grain')->group(function (){
             Route::patch('/{grain}', [GrainsController::class, 'update'])->middleware('check_permission:edit_grain');
             Route::delete('/{grain}', [GrainsController::class, 'destroy'])->middleware('check_permission:delete_grain');
+        });
+        // Silo
+        Route::apiResource('silo', SiloController::class)->only(['store', 'index'])->middleware('check_permission:add_silo');
+        Route::prefix('silo')->group(function (){
+            Route::patch('/{silos}', [SiloController::class, 'update'])->middleware('check_permission:edit_silo');
+            Route::delete('/{silo}', [SiloController::class, 'destroy'])->middleware('check_permission:delete_silo');
         });
     });
 });

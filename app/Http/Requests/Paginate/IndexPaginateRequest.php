@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Grain;
+namespace App\Http\Requests\Paginate;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class IndexGrainsRequest extends FormRequest
+class IndexPaginateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
