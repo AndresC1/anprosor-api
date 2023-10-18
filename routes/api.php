@@ -21,6 +21,8 @@ Route::prefix('v1')->group(function (){
             Route::get('/info', [UserController::class, 'show']);
             Route::get('/list', [UserController::class, 'index'])->middleware('check_permission:view_list_user');
             Route::post('/change_status', [UserController::class, 'changeStatus'])->middleware('change_status_user');
+            Route::patch('/update', [UserController::class, 'update']);
+            Route::post('/change_password', [UserController::class, 'changePassword']);
         });
         // Role
         Route::prefix('role')->group(function (){

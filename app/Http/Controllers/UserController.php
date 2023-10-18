@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ChangeStatusRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\User\InfoCleanUserResource;
 use App\Http\Resources\User\InfoUserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -43,7 +48,8 @@ class UserController extends Controller
     }
 
     public function changeStatus(ChangeStatusRequest $request){
-        $user = User::find(request()->user_id);
+        $request->validated();
+        $user = User::find($request->user_id);
         $user->is_active = !$user->is_active;
         $user->save();
 
@@ -52,5 +58,51 @@ class UserController extends Controller
             'message' => 'User status changed',
             'status' => 200,
         ]);
+    }
+
+    public function update(UpdateUserRequest $request){
+        try{
+            $request->validated();
+            $user = Auth::user();
+            $user->update([
+                'name' => $request->name??$user->name,
+                'email' => $request->email??$user->email,
+            ]);
+
+            return response()->json([
+                'user' => InfoCleanUserResource::make($user),
+                'message' => 'User updated',
+                'status' => 200,
+            ]);
+        } catch (Exception $e){
+            return response()->json([
+                'message' => 'error updating user',
+                'error' => $e->getMessage(),
+                'status' => 500,
+            ]);
+        }
+    }
+
+    public function changePassword(ChangePasswordRequest $request){
+        try{
+            $request->validated();
+            $user = Auth::user();
+            $user->update([
+                'password' => Hash::make($request->new_password),
+                'change_password' => 1,
+                'last_password_change_at' => now('America/Managua'),
+            ]);
+            Auth::user()->tokens()->delete();
+            return response()->json([
+                'message' => 'Changed password successfully',
+                'status' => 200,
+            ]);
+        } catch (Exception $e){
+            return response()->json([
+                'message' => 'error changing password',
+                'error' => $e->getMessage(),
+                'status' => 500,
+            ]);
+        }
     }
 }
