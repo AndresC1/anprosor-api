@@ -18,6 +18,9 @@ class PermissionSeeder extends Seeder
             ['name' => 'add_grain', 'description' => 'Permiso para ver y agregar granos'],
             ['name' => 'edit_grain', 'description' => 'Permiso para editar granos'],
             ['name' => 'delete_grain', 'description' => 'Permiso para eliminar granos'],
+            ['name' => 'add_silo', 'description' => 'Permiso para ver y agregar silos'],
+            ['name' => 'edit_silo', 'description' => 'Permiso para editar silos'],
+            ['name' => 'delete_silo', 'description' => 'Permiso para eliminar silos'],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');

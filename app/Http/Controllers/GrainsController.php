@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Grain\IndexGrainsRequest;
+use App\Http\Requests\Paginate\IndexPaginateRequest;
 use App\Http\Resources\Grains\InfoGrainResource;
 use App\Models\Grains;
 use App\Http\Requests\Grain\StoreGrainsRequest;
@@ -14,7 +14,7 @@ class GrainsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(IndexGrainsRequest $request)
+    public function index(IndexPaginateRequest $request)
     {
         try{
             $request->validated();
