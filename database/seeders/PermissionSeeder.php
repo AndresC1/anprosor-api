@@ -15,6 +15,9 @@ class PermissionSeeder extends Seeder
         $permissions = [
             ['name' => 'add_user', 'description' => 'Permiso para agregar usuarios'],
             ['name' => 'view_list_user', 'description' => 'Permiso para ver lista de usuarios'],
+            ['name' => 'add_grain', 'description' => 'Permiso para ver y agregar granos'],
+            ['name' => 'edit_grain', 'description' => 'Permiso para editar granos'],
+            ['name' => 'delete_grain', 'description' => 'Permiso para eliminar granos'],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
