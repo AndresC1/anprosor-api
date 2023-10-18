@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Grain\IndexGrainsRequest;
 use App\Http\Resources\Grains\InfoGrainResource;
 use App\Models\Grains;
 use App\Http\Requests\Grain\StoreGrainsRequest;
@@ -13,25 +14,33 @@ class GrainsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexGrainsRequest $request)
     {
         try{
-            $listGrains = Grains::select('*')->paginate(10);
+            $request->validated();
+            if($request->paginate == 'true'){
+                $listGrains = Grains::select('*')->paginate(10);
+                $dataPaginate = [
+                    'meta' => [
+                        'total' => $listGrains->total(),
+                        'count' => $listGrains->count(),
+                        'per_page' => $listGrains->perPage(),
+                        'current_page' => $listGrains->currentPage(),
+                        'total_pages' => $listGrains->lastPage(),
+                    ],
+                    'links' => [
+                        'first' => $listGrains->url(1),
+                        'last' => $listGrains->url($listGrains->lastPage()),
+                        'prev' => $listGrains->previousPageUrl(),
+                        'next' => $listGrains->nextPageUrl(),
+                    ],
+                ];
+            } else{
+                $listGrains = Grains::select('*')->get();
+            }
             return response()->json([
                 'grains' => InfoGrainResource::collection($listGrains),
-                'meta' => [
-                    'total' => $listGrains->total(),
-                    'count' => $listGrains->count(),
-                    'per_page' => $listGrains->perPage(),
-                    'current_page' => $listGrains->currentPage(),
-                    'total_pages' => $listGrains->lastPage(),
-                ],
-                'links' => [
-                    'first' => $listGrains->url(1),
-                    'last' => $listGrains->url($listGrains->lastPage()),
-                    'prev' => $listGrains->previousPageUrl(),
-                    'next' => $listGrains->nextPageUrl(),
-                ],
+                'paginate' => $dataPaginate??null,
                 'message' => 'List of grains',
                 'status' => 200,
             ]);
