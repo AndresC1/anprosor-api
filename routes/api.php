@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\GrainsController;
 use App\Http\Controllers\SiloController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\Conversion\ConverterController;
 
 Route::prefix('v1')->group(function (){
     Route::prefix('auth')->group(function (){
@@ -49,5 +50,7 @@ Route::prefix('v1')->group(function (){
             Route::patch('/{services}', [ServiceController::class, 'update'])->middleware('check_permission:edit_service');
             Route::delete('/{services}', [ServiceController::class, 'destroy'])->middleware('check_permission:delete_service');
         });
+        // Conversion
+        Route::get('/converter', [ConverterController::class, "converter"]);
     });
 });
