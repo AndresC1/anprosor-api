@@ -24,6 +24,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'add_service', 'description' => 'Permiso para ver y agregar servicios'],
             ['name' => 'edit_service', 'description' => 'Permiso para editar servicios'],
             ['name' => 'delete_service', 'description' => 'Permiso para eliminar servicios'],
+            ['name' => 'add_remission', 'description' => 'Permiso para crear remisiones'],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');

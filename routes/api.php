@@ -9,6 +9,7 @@ use App\Http\Controllers\GrainsController;
 use App\Http\Controllers\SiloController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Conversion\ConverterController;
+use App\Http\Controllers\RemissionController;
 
 Route::prefix('v1')->group(function (){
     Route::prefix('auth')->group(function (){
@@ -52,5 +53,10 @@ Route::prefix('v1')->group(function (){
         });
         // Conversion
         Route::get('/converter', [ConverterController::class, "converter"]);
+        // Remission
+        Route::apiResource('remission', RemissionController::class)->only(['store', 'index'])->middleware('check_permission:add_remission');
+        Route::prefix('remission')->group(function (){
+            Route::get('/{remission}', [RemissionController::class, 'show']);
+        });
     });
 });
