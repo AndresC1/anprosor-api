@@ -22,7 +22,10 @@ class IndexPaginateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'paginate' => 'in:true,false',
+            'paginate' => 'in:true,false|nullable',
+            'per_page' => 'integer|min:1|nullable',
+            'OrderBy' => 'string|nullable|in:asc,desc',
+            'type' => 'string|nullable|in:all,completado,en_curso',
         ];
     }
 
@@ -33,6 +36,12 @@ class IndexPaginateRequest extends FormRequest
     {
         return [
             'paginate.in' => 'paginate must be true or false',
+            'per_page.integer' => 'page must be integer',
+            'per_page.min' => 'page must be greater than 0',
+            'OrderBy.string' => 'OrderBy must be string',
+            'OrderBy.in' => 'OrderBy must be asc or desc',
+            'type.string' => 'type must be string',
+            'type.in' => 'type must be all, completado or en_curso',
         ];
     }
 }
