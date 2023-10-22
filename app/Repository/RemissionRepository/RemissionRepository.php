@@ -49,4 +49,8 @@ class RemissionRepository
         ]);
         return $remission;
     }
+
+    public function FinishRemission(){
+        //
+    }
 }

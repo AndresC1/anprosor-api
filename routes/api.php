@@ -57,6 +57,7 @@ Route::prefix('v1')->group(function (){
         Route::apiResource('remission', RemissionController::class)->only(['store', 'index'])->middleware('check_permission:add_remission');
         Route::prefix('remission')->group(function (){
             Route::get('/{remission}', [RemissionController::class, 'show']);
+            Route::post('/finish/{id}', [RemissionController::class, 'finishRemission'])->middleware('check_permission:add_remission');
         });
     });
 });
