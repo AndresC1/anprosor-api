@@ -11,6 +11,7 @@ use App\Http\Requests\Remission\UpdateRemissionRequest;
 use App\Services\RemissionServices\RemissionService;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Remission\FinishRemissionRequest;
 
 class RemissionController extends Controller
 {
@@ -142,5 +143,49 @@ class RemissionController extends Controller
     public function destroy(Remission $remission)
     {
         //
+    }
+
+    public function finishRemission(FinishRemissionRequest $request, int $remission)
+    {
+        try{
+            $request->validated();
+            $remission = Remission::find($remission);
+            if (!$remission) {
+                return response()->json([
+                    'message' => 'Remission not found',
+                    'status' => 404,
+                ], 404);
+            }
+            $remission->update([
+                'remision_origen' => $request->remision_origen??null,
+                'vapor' => $request->vapor??null,
+                'peso_segun_puerto' => $request->peso_segun_puerto??null,
+                'silo_id' => $request->silo_id??null,
+                'temperatura' => $request->temperatura??null,
+                'humedad' => $request->humedad??null,
+                'impureza' => $request->impureza??null,
+                'grano_quebrado' => $request->grano_quebrado??null,
+                'grano_no_desarrollado' => $request->grano_no_desarrollado??null,
+                'peso_tara' => $request->peso_tara??null,
+                'peso_neto' => $request->peso_neto??null,
+                'observaciones' => $request->observaciones??null,
+                'remision_general_xlsx' => $request->remision_general_xlsx??null,
+                'recibo_ingreso_xlsx' => $request->recibo_ingreso_xlsx??null,
+                'recibo_egreso_xlsx' => $request->recibo_egreso_xlsx??null,
+                'estado' => 'completado',
+                'hora_salida' => now('America/Managua')->format('H:i:s'),
+                'ultima_modificacion_por' => auth()->user()->id,
+            ]);
+            return response()->json([
+                'remission' => DataRemissionResource::make($remission),
+                'message' => 'Remission finished successfully',
+                'status' => 200,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'error getting remission',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
