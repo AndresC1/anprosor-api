@@ -15,7 +15,7 @@ class PermissionSeeder extends Seeder
         $permissions = [
             ['name' => 'add_user', 'description' => 'Permiso para agregar usuarios'],
             ['name' => 'view_list_user', 'description' => 'Permiso para ver lista de usuarios'],
-            ['name' => 'add_grain', 'description' => 'Permiso para ver y agregar granos'],
+            ['name' => 'add_grain', 'description' => 'Permiso para agregar granos'],
             ['name' => 'edit_grain', 'description' => 'Permiso para editar granos'],
             ['name' => 'delete_grain', 'description' => 'Permiso para eliminar granos'],
             ['name' => 'add_silo', 'description' => 'Permiso para ver y agregar silos'],
@@ -25,6 +25,13 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit_service', 'description' => 'Permiso para editar servicios'],
             ['name' => 'delete_service', 'description' => 'Permiso para eliminar servicios'],
             ['name' => 'add_remission', 'description' => 'Permiso para crear remisiones'],
+            ['name' => 'add_client', 'description' => 'Permiso para ver y agregar clientes'],
+            ['name' => 'edit_client', 'description' => 'Permiso para editar clientes'],
+            ['name' => 'delete_client', 'description' => 'Permiso para eliminar clientes'],
+            ['name' => 'show_grain', 'description' => 'Permiso para ver lista granos'],
+            ['name' => 'show_silo', 'description' => 'Permiso para ver lista de silos'],
+            ['name' => 'show_service', 'description' => 'Permiso para ver lista de servicios'],
+            ['name' => 'show_client', 'description' => 'Permiso para ver lista de clientes'],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
