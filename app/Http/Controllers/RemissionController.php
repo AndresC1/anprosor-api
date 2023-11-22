@@ -82,7 +82,7 @@ class RemissionController extends Controller
             $remission = $remission->registerRemission($request);
             DB::commit();
             return response()->json([
-                'remission' => DataRemissionResource::make($remission),
+                'remission' => InfoRemissionResource::make($remission),
                 'message' => 'RemissionRepository created successfully',
                 'status' => 201,
             ]);
