@@ -15,7 +15,7 @@ class Remission extends Model
         'remision_origen',
         'hora_entrada',
         'hora_salida',
-        'cliente',
+        'client_id',
         'servicio_id',
         'vapor',
         'creado_por',
@@ -42,4 +42,9 @@ class Remission extends Model
         'recibo_ingreso_xlsx',
         'recibo_egreso_xlsx',
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'cliente_id');
+    }
 }

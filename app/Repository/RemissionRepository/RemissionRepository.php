@@ -19,7 +19,7 @@ class RemissionRepository
             'remision_origen' => $request->remision_origen??null,
             'hora_entrada' => now('America/Managua')->format('H:i:s'),
             'hora_salida' => $hora_salida,
-            'cliente' => $request->cliente,
+            'client_id' => $request->client_id,
             'servicio_id' => $request->servicio_id,
             'vapor' => $request->vapor??null,
             'peso_segun_puerto' => $request->peso_segun_puerto??null,

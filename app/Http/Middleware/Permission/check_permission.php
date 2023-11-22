@@ -17,13 +17,21 @@ class check_permission
      */
     public function handle(Request $request, Closure $next, ...$params): Response
     {
-        $id_permission = permission::where('name', $params[0])->first()->id;
-        if(!Auth::user()->role->rolePermission->map->permission_id->contains($id_permission)){
+        try{
+            $id_permission = permission::where('name', $params[0])->first()->id;
+            if(!Auth::user()->role->rolePermission->map->permission_id->contains($id_permission)){
+                return response()->json([
+                    'mensaje' => 'No tienes permiso para realizar esta acción',
+                    'estado' => 403
+                ], 403);
+            }
+            return $next($request);
+        } catch (\Throwable $th) {
             return response()->json([
-                'mensaje' => 'No tienes permiso para realizar esta acción',
-                'estado' => 403
-            ], 403);
+                'mensaje' => 'Error al verificar permisos',
+                'error' => $th->getMessage(),
+                'estado' => 500
+            ], 500);
         }
-        return $next($request);
     }
 }
