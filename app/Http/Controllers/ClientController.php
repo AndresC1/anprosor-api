@@ -121,11 +121,7 @@ class ClientController extends Controller
             $request->validated();
             $client = Client::find($clients);
             if ($client){
-                $client->update([
-                    'name' => $request->name??$client->name,
-                    'email' => $request->email??$client->email,
-                    'phone' => $request->phone??$client->phone,
-                ]);
+                $client->update($request->all());
                 DB::commit();
                 return response()->json([
                     'message' => 'Client updated successfully',
