@@ -125,10 +125,7 @@ class ServiceController extends Controller
             $request->validated();
             $service = Service::find($services);
             if($service){
-                $service->update([
-                    'name' => $request->name??$service->name,
-                    'description' => $request->description??$service->description,
-                ]);
+                $service->update($request->all());
                 return response()->json([
                     'service' => InfoServiceResource::make($service),
                     'message' => 'Service updated successfully',
