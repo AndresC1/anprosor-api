@@ -65,8 +65,14 @@ class UserController extends Controller
             $request->validated();
             $user = Auth::user();
             $user->update([
-                'name' => $request->name??$user->name,
-                'email' => $request->email??$user->email,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $user->password,
+                'change_password' => $user->change_password,
+                'is_active' => $user->is_active,
+                'last_password_change_at' => $user->last_password_change_at,
+                'last_login_at' => $user->last_login_at,
+                'role_id' => $user->role_id,
             ]);
 
             return response()->json([

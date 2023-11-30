@@ -23,7 +23,6 @@ class StoreSiloRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|string|unique:silos,code',
             'name' => 'required|string|unique:silos,name',
             'capacity_total' => 'required|numeric|min:0',
             'unit_of_measure' => 'required|string|min:2|max:3|in:ton,kg,qq',
@@ -36,9 +35,6 @@ class StoreSiloRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'code.required' => 'code is required',
-            'code.string' => 'code must be a string',
-            'code.unique' => 'code must be unique',
             'name.required' => 'name is required',
             'name.string' => 'name must be a string',
             'name.unique' => 'name must be unique',

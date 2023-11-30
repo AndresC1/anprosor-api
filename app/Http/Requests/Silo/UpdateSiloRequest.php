@@ -8,6 +8,7 @@ use App\Rules\Silo\ValidateCapacityUsedRule;
 use App\Rules\Silo\ValidateCurrentCapacityRule;
 use App\Rules\Silo\ValidateUsedCapacityRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSiloRequest extends FormRequest
 {
@@ -27,8 +28,11 @@ class UpdateSiloRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'string|unique:silos,code',
-            'name' => 'string|unique:silos,name',
+            'name' => [
+                'string',
+                'max:255',
+                Rule::unique(Silo::class, 'name')->ignore($this->route('silos')),
+            ],
         ];
     }
 

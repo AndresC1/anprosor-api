@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Grain;
 
+use App\Models\Grains;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateGrainsRequest extends FormRequest
 {
@@ -22,7 +24,12 @@ class UpdateGrainsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:grains,name,' . $this->id,
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('grains', 'name')->ignore($this->route('grain'))
+            ]
         ];
     }
 

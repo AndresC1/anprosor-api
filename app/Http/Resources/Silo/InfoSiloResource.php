@@ -16,7 +16,6 @@ class InfoSiloResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'code' => $this->code,
             'name' => $this->name,
             'unit_of_measure' => $this->unit_of_measure,
             'capacity_total' => $this->capacity_total,
