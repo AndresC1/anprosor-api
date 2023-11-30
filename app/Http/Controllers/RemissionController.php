@@ -23,10 +23,16 @@ class RemissionController extends Controller
         try{
             $request->validated();
             if($request->paginate == 'true'){
-                $listRemissions = Remission::select('*')
-                    ->where('estado', $request->type??'all')
-                    ->orderBy('id', $request->OrderBy??'desc')
-                    ->paginate($request->per_page??10);
+                if(!$request->type){
+                    $listRemissions = Remission::select('*')
+                        ->orderBy('id', $request->OrderBy??'desc')
+                        ->paginate($request->per_page??10);
+                } else{
+                    $listRemissions = Remission::select('*')
+                        ->where('estado', $request->type)
+                        ->orderBy('id', $request->OrderBy??'desc')
+                        ->paginate($request->per_page??10);
+                }
                 $dataPaginate = [
                     'meta' => [
                         'total' => $listRemissions->total(),
