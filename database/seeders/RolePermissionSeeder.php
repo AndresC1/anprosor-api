@@ -37,8 +37,6 @@ class RolePermissionSeeder extends Seeder
             ['role_id' => 2, 'permission_id' => 18],
             ['role_id' => 1, 'permission_id' => 19],
             ['role_id' => 2, 'permission_id' => 19],
-            ['role_id' => 1, 'permission_id' => 20],
-            ['role_id' => 2, 'permission_id' => 20],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
