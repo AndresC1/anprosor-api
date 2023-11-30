@@ -23,8 +23,8 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:255|min:3',
-            'email' => 'email|unique:users,email,' . auth()->user()->id,
+            'name' => 'required|string|max:255|min:3',
+            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
         ];
     }
 
@@ -40,6 +40,7 @@ class UpdateUserRequest extends FormRequest
             'name.max' => 'Name must be less than 255 characters',
             'email.email' => 'Email must be a valid email address',
             'email.unique' => 'Email already exists',
+            'email.required' => 'Email is required',
         ];
     }
 }
