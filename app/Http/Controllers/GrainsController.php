@@ -124,10 +124,7 @@ class GrainsController extends Controller
             $request->validated();
             $grain = Grains::find($grains);
             if($grain){
-                $grain->update([
-                    'code' => $request->code??$grain->code,
-                    'name' => $request->name??$grain->name,
-                ]);
+                $grain->update($request->all());
                 return response()->json([
                     'grain' => InfoGrainResource::make($grain),
                     'message' => 'Grain updated',
