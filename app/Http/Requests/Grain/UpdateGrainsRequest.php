@@ -22,8 +22,7 @@ class UpdateGrainsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'string|max:255|unique:grains,code,' . $this->id,
-            'name' => 'string|max:255|unique:grains,name,' . $this->id,
+            'name' => 'required|string|max:255|unique:grains,name,' . $this->id,
         ];
     }
 

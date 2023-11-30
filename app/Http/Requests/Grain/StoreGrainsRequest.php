@@ -22,7 +22,6 @@ class StoreGrainsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|string|max:255|unique:grains',
             'name' => 'required|string|max:255|unique:grains',
         ];
     }
@@ -35,10 +34,6 @@ class StoreGrainsRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'code.required' => 'Code is required!',
-            'code.string' => 'Code must be a string!',
-            'code.max' => 'Code must be less than 255 characters!',
-            'code.unique' => 'Code must be unique!',
             'name.required' => 'Name is required!',
             'name.string' => 'Name must be a string!',
             'name.max' => 'Name must be less than 255 characters!',

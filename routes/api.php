@@ -38,7 +38,7 @@ Route::prefix('v1')->group(function (){
         Route::apiResource('grain', GrainsController::class)->only(['store'])->middleware('check_permission:add_grain');
         Route::apiResource('grain', GrainsController::class)->only(['index'])->middleware('check_permission:show_grain');
         Route::prefix('grain')->group(function (){
-            Route::patch('/{grain}', [GrainsController::class, 'update'])->middleware('check_permission:edit_grain');
+            Route::put('/{grain}', [GrainsController::class, 'update'])->middleware('check_permission:edit_grain');
             Route::delete('/{grain}', [GrainsController::class, 'destroy'])->middleware('check_permission:delete_grain');
         });
         // Silo
