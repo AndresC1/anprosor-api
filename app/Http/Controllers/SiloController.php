@@ -68,7 +68,6 @@ class SiloController extends Controller
         try{
             $request->validated();
             $silo = Silo::create([
-                'code' => $request->code,
                 'name' => $request->name,
                 'capacity_total' => (float)$request->capacity_total,
                 'unit_of_measure' => $request->unit_of_measure,
@@ -132,10 +131,7 @@ class SiloController extends Controller
             $request->validated();
             $silo = Silo::find($silos);
             if($silo){
-                $silo->update([
-                    'code' => $request->code??$silo->code,
-                    'name' => $request->name??$silo->name,
-                ]);
+                $silo->update($request->all());
                 return response()->json([
                     'silo' => InfoSiloResource::make($silo),
                     'message' => 'silo updated successfully',
