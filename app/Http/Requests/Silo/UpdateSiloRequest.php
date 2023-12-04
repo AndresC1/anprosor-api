@@ -27,11 +27,12 @@ class UpdateSiloRequest extends FormRequest
      */
     public function rules(): array
     {
+        $siloID = Silo::find(request()->route('silos'))->id;
         return [
             'name' => [
                 'string',
                 'max:255',
-                Rule::unique(Silo::class, 'name')->ignore($this->route('silos')),
+                Rule::unique(Silo::class, 'name')->whereNot('id', $siloID),
             ],
         ];
     }
@@ -42,10 +43,8 @@ class UpdateSiloRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'code.string' => 'code must be a string',
-            'code.unique' => 'code must be unique',
-            'name.string' => 'name must be a string',
-            'name.unique' => 'name must be unique',
+            'name.string' => 'El nombre debe ser una cadena de caracteres',
+            'name.unique' => 'El nombre ya está en uso',
         ];
     }
 }
