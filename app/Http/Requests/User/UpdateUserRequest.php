@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 use App\Rules\User\ValidateBothPassword;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -24,7 +25,12 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|min:3',
-            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore(auth()->user()->id)
+            ],
         ];
     }
 
@@ -36,11 +42,11 @@ class UpdateUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.string' => 'Name must be a string',
-            'name.max' => 'Name must be less than 255 characters',
-            'email.email' => 'Email must be a valid email address',
-            'email.unique' => 'Email already exists',
-            'email.required' => 'Email is required',
+            'name.string' => 'El nombre debe ser una cadena de caracteres',
+            'name.max' => 'El nombre no debe exceder los 255 caracteres',
+            'email.email' => 'El correo electrónico debe ser una dirección de correo electrónico válida',
+            'email.unique' => 'El correo electrónico ya está en uso',
+            'email.required' => 'El correo electrónico es obligatorio',
         ];
     }
 }
