@@ -23,12 +23,13 @@ class UpdateGrainsRequest extends FormRequest
      */
     public function rules(): array
     {
+        $granID = Grains::find(request()->route('grain'))->id;
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('grains', 'name')->ignore($this->route('grain'))
+                Rule::unique('grains', 'name')->whereNot('id', $granID)
             ]
         ];
     }
@@ -41,12 +42,9 @@ class UpdateGrainsRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'code.string' => 'Code must be a string!',
-            'code.max' => 'Code must be less than 255 characters!',
-            'code.unique' => 'Code must be unique!',
-            'name.string' => 'Name must be a string!',
-            'name.max' => 'Name must be less than 255 characters!',
-            'name.unique' => 'Name must be unique!',
+            'name.string' => 'El nombre debe ser una cadena de caracteres',
+            'name.max' => 'El nombre no debe exceder los 255 caracteres',
+            'name.unique' => 'El nombre ya está en uso',
         ];
     }
 }
