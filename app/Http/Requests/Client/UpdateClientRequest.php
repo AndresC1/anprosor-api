@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Client;
 
+use App\Models\Client;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -22,12 +23,13 @@ class UpdateClientRequest extends FormRequest
      */
     public function rules(): array
     {
+        $ClientID = Client::find(request()->route('clients'))->id;
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('clients', 'name')->ignore($this->route('clients')),
+                Rule::unique('clients', 'name')->whereNot('id', $ClientID)
             ],
             'email' => [
                 'nullable',
@@ -35,6 +37,7 @@ class UpdateClientRequest extends FormRequest
                 'email',
                 'max:255',
                 'unique:clients,email,',
+                Rule::unique('clients', 'email')->whereNot('id', $ClientID)
             ],
             'phone' => 'nullable|string|max:20',
         ];
