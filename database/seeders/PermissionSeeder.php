@@ -24,7 +24,6 @@ class PermissionSeeder extends Seeder
             ['name' => 'add_service', 'description' => 'Permiso para ver y agregar servicios'],
             ['name' => 'edit_service', 'description' => 'Permiso para editar servicios'],
             ['name' => 'delete_service', 'description' => 'Permiso para eliminar servicios'],
-            ['name' => 'add_remission', 'description' => 'Permiso para crear remisiones'],
             ['name' => 'add_client', 'description' => 'Permiso para ver y agregar clientes'],
             ['name' => 'edit_client', 'description' => 'Permiso para editar clientes'],
             ['name' => 'delete_client', 'description' => 'Permiso para eliminar clientes'],
