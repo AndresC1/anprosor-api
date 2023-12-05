@@ -22,4 +22,9 @@ class InformacionAdicional extends Model
     public function ActualizadoPor(){
         return $this->belongsTo(User::class, 'actualizado_por');
     }
+
+    public function operaciones()
+    {
+        return $this->hasOne(Operacion::class, 'informacion_adicional_id');
+    }
 }

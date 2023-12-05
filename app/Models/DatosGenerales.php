@@ -18,4 +18,9 @@ class DatosGenerales extends Model
         'cedula_conductor',
         'placa_vehiculo',
     ];
+
+    public function operaciones()
+    {
+        return $this->hasOne(Operacion::class, 'datos_generales_id');
+    }
 }
