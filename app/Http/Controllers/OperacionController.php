@@ -141,4 +141,20 @@ class OperacionController extends Controller
     {
         //
     }
+
+    public function cancel(int $operation){
+        try{
+            $data_operation = Operacion::findOrFail($operation);
+            $data_operation->estado = 'cancelada';
+            $data_operation->save();
+            return response()->json([
+                'message' => 'Operacion cancelada correctamente',
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al cancelar la operacion',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

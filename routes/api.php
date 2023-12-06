@@ -70,6 +70,7 @@ Route::prefix('v1')->group(function (){
             Route::post('/', [OperacionController::class, 'store'])->middleware('check_permission:add_operation');
             Route::get('/{operation}', [OperacionController::class, 'show'])->middleware('check_permission:show_operation');
             Route::put('/{operation}', [OperacionController::class, 'update'])->middleware('check_permission:edit_operation');
+            Route::post('/{operation}/cancel', [OperacionController::class, 'cancel'])->middleware('check_permission:cancel_operation');
         });
     });
 });
