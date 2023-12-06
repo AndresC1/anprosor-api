@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('informacion_adicionals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('creado_por')->unique()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('actualizado_por')->unique()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('creado_por')->index()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('actualizado_por')->index()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->text('observaciones')->nullable();
             $table->timestamps();
         });

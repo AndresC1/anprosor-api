@@ -20,7 +20,6 @@ class SiloFactory extends Factory
         $currentCapacity = $this->faker->randomFloat(2, 0, $capacityTotal);
         $usedCapacity = $capacityTotal - $currentCapacity;
         return [
-            'code' => 'S-00'.$this->faker->randomNumber(2),
             'name' => 'silo_'.$this->faker->randomNumber(2),
             'capacity_total' => $capacityTotal,
             'unit_of_measure' => 'ton',
