@@ -23,7 +23,7 @@ class StoreOperacionRequest extends FormRequest
     {
         return [
             'movimiento' => 'required|string|in:remision,ingreso',
-            'estado' => 'required|string|in:en_proceso,finalizado',
+            'estado' => 'required|string|in:en_proceso,finalizado,cancelada',
             'numero_documento' => 'required|string|max:255',
             'fecha_registro' => 'required|date',
             'hora_entrada' => 'required|date_format:H:i:s',

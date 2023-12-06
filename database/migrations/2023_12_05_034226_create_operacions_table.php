@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('movimiento', ['remision', 'ingreso']);
             $table->foreignId('datos_generales_id')->index()->constrained('datos_generales')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('informacion_adicional_id')->index()->index()->constrained('informacion_adicionals')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->enum('estado', ['en_proceso', 'finalizado'])->default('en_proceso');
+            $table->enum('estado', ['en_proceso', 'finalizado', 'cancelada'])->default('en_proceso');
             $table->timestamps();
         });
     }

@@ -10,4 +10,9 @@ class InformacionAdicionalRepository
         $NewInformacionAdicional = InformacionAdicional::create($data);
         return $NewInformacionAdicional->id;
     }
+
+    public function update($data, InformacionAdicional $informacionAdicional): int{
+        $informacionAdicional->update($data);
+        return $informacionAdicional->id;
+    }
 }

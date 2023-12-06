@@ -114,9 +114,24 @@ class OperacionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOperacionRequest $request, Operacion $operacion)
+    public function update(UpdateOperacionRequest $request, int $operation)
     {
-        //
+        try{
+            $request->validated();
+            DB::beginTransaction();
+            $data_operation = Operacion::findOrFail($operation);
+            $info_operation = new OperationService();
+            $info_operation->update($request, $data_operation);
+            DB::commit();
+            return response()->json([
+                'message' => 'Operacion actualizada correctamente',
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al actualizar la operacion',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

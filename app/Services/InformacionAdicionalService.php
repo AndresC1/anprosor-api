@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\InformacionAdicional;
 use App\Repository\InformacionAdicionalRepository;
 use Illuminate\Http\Request;
 
@@ -25,5 +26,20 @@ class InformacionAdicionalService
             'actualizado_por' => auth()->user()->id,
             'observaciones' => $request->observaciones,
         ];
+    }
+
+    public function update(Request $request, int $informacionAdicional): int
+    {
+        $data = $this->destructure($request);
+        $data = array_merge($data, [
+            'actualizado_por' => auth()->user()->id,
+        ]);
+        $infoInformacionAdicional = $this->find($informacionAdicional);
+        return $this->informacionAdicionalRepository->update($data, $infoInformacionAdicional);
+    }
+
+    public function find(int $informacionAdicionalId): InformacionAdicional
+    {
+        return InformacionAdicional::findOrfail($informacionAdicionalId);
     }
 }

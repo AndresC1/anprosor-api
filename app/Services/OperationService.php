@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Operacion;
 use App\Repository\OperationRepository;
 
 class OperationService
@@ -39,5 +40,13 @@ class OperationService
             'estado' => $estado,
             'movimiento' => $movimiento,
         ] = $request->all();
+    }
+
+    public function update($request, Operacion $operation)
+    {
+        $requestDestructured = $this->destructure($request);
+        $this->datosGeneralesService->update($request, $operation->datos_generales_id);
+        $this->informacionAdicionalService->update($request, $operation->informacion_adicional_id);
+        $this->operationRepository->update($requestDestructured, $operation);
     }
 }
