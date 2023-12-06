@@ -33,6 +33,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'show_client', 'description' => 'Permiso para ver lista de clientes'],
             ['name' => 'show_operation', 'description' => 'Permiso para ver lista de operaciones'],
             ['name' => 'add_operation', 'description' => 'Permiso para agregar operaciones'],
+            ['name' => 'edit_operation', 'description' => 'Permiso para editar operaciones'],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');

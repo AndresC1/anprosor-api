@@ -10,4 +10,9 @@ class DatosGeneralesRepository
         $NewDatosGenerales = DatosGenerales::create($data);
         return $NewDatosGenerales->id;
     }
+
+    public function update($data, DatosGenerales $datosGenerales): int{
+        $datosGenerales->update($data);
+        return $datosGenerales->id;
+    }
 }
