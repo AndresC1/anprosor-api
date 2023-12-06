@@ -34,6 +34,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'show_operation', 'description' => 'Permiso para ver lista de operaciones'],
             ['name' => 'add_operation', 'description' => 'Permiso para agregar operaciones'],
             ['name' => 'edit_operation', 'description' => 'Permiso para editar operaciones'],
+            ['name' => 'cancel_operation', 'description' => 'Permiso para cancelar operacion'],
         ];
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
