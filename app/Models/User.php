@@ -52,4 +52,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    public function RegistroOperacion()
+    {
+        return $this->hasOne(InformacionAdicional::class, 'creado_por');
+    }
+
+    public function ActualizacionOperacion()
+    {
+        return $this->hasOne(InformacionAdicional::class, 'actualizado_por');
+    }
 }

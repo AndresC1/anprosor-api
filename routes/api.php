@@ -9,7 +9,7 @@ use App\Http\Controllers\GrainsController;
 use App\Http\Controllers\SiloController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Conversion\ConverterController;
-use App\Http\Controllers\RemissionController;
+use App\Http\Controllers\OperacionController;
 use App\Http\Controllers\ClientController;
 
 Route::prefix('v1')->group(function (){
@@ -63,6 +63,12 @@ Route::prefix('v1')->group(function (){
         Route::prefix('client')->group(function (){
             Route::put('/{clients}', [ClientController::class, 'update'])->middleware('check_permission:edit_client');
             Route::delete('/{clients}', [ClientController::class, 'destroy'])->middleware('check_permission:delete_client');
+        });
+        // Operaciones
+        Route::apiResource('operation', OperacionController::class)->only(['index'])->middleware('check_permission:show_operation');
+        Route::prefix('operation')->group(function (){
+            Route::post('/', [OperacionController::class, 'store'])->middleware('check_permission:add_operation');
+            Route::get('/{operation}', [OperacionController::class, 'show'])->middleware('check_permission:show_operation');
         });
     });
 });
