@@ -25,4 +25,9 @@ class Operacion extends Model
     {
         return $this->belongsTo(InformacionAdicional::class, 'informacion_adicional_id');
     }
+
+    public function detalle_operaciones()
+    {
+        return $this->hasMany(DetalleOperacion::class, 'operacion_id');
+    }
 }

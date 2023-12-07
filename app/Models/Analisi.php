@@ -17,4 +17,9 @@ class Analisi extends Model
         'grano_no_desarrollado',
         'hongo',
     ];
+
+    public function detalleOperacion()
+    {
+        return $this->hasOne(DetalleOperacion::class, 'analisis_id');
+    }
 }

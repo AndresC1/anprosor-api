@@ -15,4 +15,9 @@ class Pesaje extends Model
         'peso_neto',
         'unidad_medida',
     ];
+
+    public function detalleOperacion()
+    {
+        return $this->hasOne(DetalleOperacion::class, 'pesaje_id');
+    }
 }
