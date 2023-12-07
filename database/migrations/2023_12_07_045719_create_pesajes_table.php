@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('pesajes', function (Blueprint $table) {
             $table->id();
-            $table->float('peso_bruto', 8, 2);
-            $table->float('peso_tara', 8, 2);
-            $table->float('peso_neto', 8, 2);
+            $table->float('peso_bruto', 8, 2)->nullable();
+            $table->float('peso_tara', 8, 2)->nullable();
+            $table->float('peso_neto', 8, 2)->nullable();
             $table->enum('unidad_medida', ['kg', 'qq', 'ton']);
             $table->timestamps();
         });
