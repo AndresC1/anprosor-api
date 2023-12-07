@@ -17,4 +17,9 @@ class Silo extends Model
         'current_capacity',
         'used_capacity',
     ];
+
+    public function detalleOperacion()
+    {
+        return $this->hasMany(DetalleOperacion::class, 'silo_id');
+    }
 }

@@ -13,4 +13,9 @@ class Service extends Model
         'name',
         'description',
     ];
+
+    public function detalleOperacion()
+    {
+        return $this->hasMany(DetalleOperacion::class, 'servicio_id');
+    }
 }

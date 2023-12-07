@@ -15,4 +15,9 @@ class InformacionVapor extends Model
         'peso_segun_puerto',
         'unidad_medida',
     ];
+
+    public function detalleOperacion()
+    {
+        return $this->hasMany(DetalleOperacion::class, 'informacion_vapor_id');
+    }
 }

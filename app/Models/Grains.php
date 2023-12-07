@@ -12,4 +12,9 @@ class Grains extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function detalleOperacion()
+    {
+        return $this->hasMany(DetalleOperacion::class, 'producto_id');
+    }
 }
