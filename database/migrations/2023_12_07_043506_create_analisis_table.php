@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('analisis', function (Blueprint $table) {
             $table->id();
-            $table->float('temperatura', 3, 2);
-            $table->float('humedad', 4, 2);
-            $table->float('impurezas', 4, 2);
+            $table->float('temperatura', 5, 2);
+            $table->float('humedad', 5, 2);
+            $table->float('impurezas', 5, 2);
             $table->integer('grano_quebrado');
             $table->integer('grano_no_desarrollado');
             $table->integer('hongo');
