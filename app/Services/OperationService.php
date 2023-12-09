@@ -4,30 +4,54 @@ namespace App\Services;
 
 use App\Models\Operacion;
 use App\Repository\OperationRepository;
+use Illuminate\Http\Request;
 
 class OperationService
 {
     private $datosGeneralesService;
     private $informacionAdicionalService;
     private $operationRepository;
+    private $informacion_vapor;
+    private $analisisService;
+    private $pesajeService;
+    private $detalleOperacionService;
     public function __construct()
     {
         $this->datosGeneralesService = new DatosGeneralesService();
         $this->informacionAdicionalService = new InformacionAdicionalService();
         $this->operationRepository = new OperationRepository();
+        $this->informacion_vapor = new InformacionVaporService();
+        $this->analisisService = new AnalisiService();
+        $this->pesajeService = new PesajeService();
+        $this->detalleOperacionService = new DetalleOperacionService();
     }
 
     public function register($request)
     {
         $datosGeneralesId = $this->datosGeneralesService->store($request);
         $informacionAdicionalId = $this->informacionAdicionalService->store($request);
-        $this->store($request, [
+        $operationID = $this->store($request, [
             'datos_generales_id' => $datosGeneralesId,
             'informacion_adicional_id' => $informacionAdicionalId,
         ]);
+        foreach ($request->detalles_operacion as $detalle_operacion){
+            $requestCreate = new Request($detalle_operacion);
+            $informacionVaporID = null;
+            if($detalle_operacion["origen"] == "barco"){
+                $informacionVaporID = $this->informacion_vapor->store($requestCreate);
+            }
+            $analisisID = $this->analisisService->store($requestCreate);
+            $pesajeID = $this->pesajeService->store($requestCreate);
+            $this->detalleOperacionService->store($requestCreate, [
+                'operacion_id' => $operationID,
+                'informacion_vapor_id' => $informacionVaporID,
+                'analisis_id' => $analisisID,
+                'pesaje_id' => $pesajeID,
+            ]);
+        }
     }
 
-    protected function store($request, array $details)
+    protected function store($request, array $details): int
     {
         $requestDestructured = $this->destructure($request);
         $data = array_merge($requestDestructured, $details);

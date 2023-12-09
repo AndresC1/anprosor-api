@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Service;
 use App\Repository\DetalleOperacionRepository;
 use Illuminate\Http\Request;
 
@@ -22,10 +23,25 @@ class DetalleOperacionService
     }
 
     public function destructure(Request $request): array{
-        return [
+        $data = [
+            'servicio_id' => $request->servicio_id,
             'origen' => $request->origen,
+            'producto_id' => $request->producto_id,
             'presentacion' => $request->presentacion,
-            'observacion' => $request->observacion,
         ] = $request->all();
+        $newDatas = [
+            'silo_id' => $this->ValidateServiceSilo($request),
+            'observacion' => $request->observacion_operacion
+        ];
+        $data = array_merge($data, $newDatas);
+        return $data;
+    }
+
+    public function ValidateServiceSilo(Request $request): int|null{
+        $almacenamientoID = Service::where('name', 'Almacenamiento')->first()->id;
+        if($request->servicio_id === $almacenamientoID){
+            return $request->silo_id;
+        }
+        return null;
     }
 }

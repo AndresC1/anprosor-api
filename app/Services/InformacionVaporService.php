@@ -19,12 +19,14 @@ class InformacionVaporService
         return $this->informacionVaporRepository->store($data);
     }
 
-    public function destructure($request): array{
-        return [
+    public function destructure(Request $request): array{
+        $data = [
             'vapor' => $request->vapor,
             'remision_origen' => $request->remision_origen,
             'peso_segun_puerto' => $request->peso_segun_puerto,
-            'unidad_medida' => $request->unidad_medida,
         ] = $request->all();
+        $UM_segun_puerto = ["unidad_medida" => $request->UM_segun_puerto];
+        $data = array_merge($data, $UM_segun_puerto);
+        return $data;
     }
 }
