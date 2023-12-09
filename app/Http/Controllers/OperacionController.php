@@ -9,6 +9,7 @@ use App\Models\Operacion;
 use App\Http\Requests\Operacion\StoreOperacionRequest;
 use App\Http\Requests\Operacion\UpdateOperacionRequest;
 use App\Services\OperationService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 

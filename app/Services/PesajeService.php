@@ -21,11 +21,13 @@ class PesajeService
 
     public function destructure(Request $request): array
     {
-        return [
+        $data = [
             'peso_bruto' => $request->peso_bruto,
             'peso_tara' => $request->peso_tara,
             'peso_neto' => $request->peso_neto,
-            'unidad_medida' => $request->unidad_medida_peso,
         ] = $request->all();
+        $newUnidadMedida = ['unidad_medida' => $request->unidad_medida_peso];
+        $data = array_merge($data, $newUnidadMedida);
+        return $data;
     }
 }
