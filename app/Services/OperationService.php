@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Operacion;
+use App\Models\Service;
 use App\Repository\OperationRepository;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class OperationService
     private $analisisService;
     private $pesajeService;
     private $detalleOperacionService;
+    private $siloService;
     public function __construct()
     {
         $this->datosGeneralesService = new DatosGeneralesService();
@@ -24,6 +26,7 @@ class OperationService
         $this->analisisService = new AnalisiService();
         $this->pesajeService = new PesajeService();
         $this->detalleOperacionService = new DetalleOperacionService();
+        $this->siloService = new SiloService();
     }
 
     public function register($request)
@@ -48,6 +51,14 @@ class OperationService
                 'analisis_id' => $analisisID,
                 'pesaje_id' => $pesajeID,
             ]);
+            $this->updateCapacitySilo($requestCreate, $request["movimiento"]);
+        }
+    }
+
+    private function updateCapacitySilo(Request $request, string $movement){
+        $service_id = $request->servicio_id;
+        if(Service::where('name', 'Almacenamiento')->first()->id == $service_id){
+            $this->siloService->updateWeight($request, $movement);
         }
     }
 
