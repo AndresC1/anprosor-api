@@ -3,6 +3,7 @@
 namespace App\Http\Resources\DetalleOperacion;
 
 use App\Http\Resources\Analisis\AnalisisResource;
+use App\Http\Resources\Archivo\ArchivoResource;
 use App\Http\Resources\Grains\InfoGrainResource;
 use App\Http\Resources\InformacionVapor\InformacionVaporResource;
 use App\Http\Resources\Pesaje\PesajeResource;
@@ -29,6 +30,7 @@ class DetalleOperacionResource extends JsonResource
             'presentacion' => $this->presentacion,
             'analisis' => new AnalisisResource($this->analisis),
             'pesaje' => new PesajeResource($this->pesaje),
+            'archivos' => new ArchivoResource($this->archivos),
             'observacion' => $this->observacion,
         ];
     }

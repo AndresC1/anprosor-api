@@ -17,6 +17,7 @@ class OperationService
     private $pesajeService;
     private $detalleOperacionService;
     private $siloService;
+    private $archivoService;
     public function __construct()
     {
         $this->datosGeneralesService = new DatosGeneralesService();
@@ -27,6 +28,7 @@ class OperationService
         $this->pesajeService = new PesajeService();
         $this->detalleOperacionService = new DetalleOperacionService();
         $this->siloService = new SiloService();
+        $this->archivoService = new ArchivoService();
     }
 
     public function register($request)
@@ -45,11 +47,13 @@ class OperationService
             }
             $analisisID = $this->analisisService->store($requestCreate);
             $pesajeID = $this->pesajeService->store($requestCreate);
+            $archivoID = $this->archivoService->store();
             $this->detalleOperacionService->store($requestCreate, [
                 'operacion_id' => $operationID,
                 'informacion_vapor_id' => $informacionVaporID,
                 'analisis_id' => $analisisID,
                 'pesaje_id' => $pesajeID,
+                'archivos_id' => $archivoID,
             ]);
             $this->updateCapacitySilo($requestCreate, $request["movimiento"]);
         }

@@ -20,6 +20,7 @@ class DetalleOperacion extends Model
         'pesaje_id',
         'observacion',
         'operacion_id',
+        'archivos_id',
     ];
 
     public function servicio()
@@ -55,5 +56,10 @@ class DetalleOperacion extends Model
     public function operacion()
     {
         return $this->belongsTo(Operacion::class, 'operacion_id');
+    }
+
+    public function archivos()
+    {
+        return $this->belongsTo(Archivo::class, 'archivos_id');
     }
 }
