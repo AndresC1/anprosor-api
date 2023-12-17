@@ -29,7 +29,11 @@ class ServiceSeeder extends Seeder
             [
                 'name' => 'Fumigación',
                 'description' => 'Fumigación de granos',
-            ]
+            ],
+            [
+                'name' => 'Pesaje',
+                'description' => 'Pesaje de producto',
+            ],
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('services')->truncate();

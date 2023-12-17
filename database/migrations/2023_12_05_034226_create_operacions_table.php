@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('operacions', function (Blueprint $table) {
             $table->id();
-            $table->enum('movimiento', ['remision', 'ingreso']);
+            $table->enum('movimiento', ['remision', 'ingreso', 'pesaje']);
             $table->foreignId('datos_generales_id')->index()->constrained('datos_generales')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('informacion_adicional_id')->index()->index()->constrained('informacion_adicionals')->cascadeOnUpdate()->cascadeOnDelete();
             $table->enum('estado', ['en_proceso', 'finalizado', 'cancelada'])->default('en_proceso');

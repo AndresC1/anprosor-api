@@ -45,18 +45,26 @@ class OperationService
             if($detalle_operacion["origen"] == "barco"){
                 $informacionVaporID = $this->informacion_vapor->store($requestCreate);
             }
-            $analisisID = $this->analisisService->store($requestCreate);
+            if(!$this->validate_service($requestCreate, 'Pesaje')){
+                $analisisID = $this->analisisService->store($requestCreate);
+            }
             $pesajeID = $this->pesajeService->store($requestCreate);
             $archivoID = $this->archivoService->store();
             $this->detalleOperacionService->store($requestCreate, [
                 'operacion_id' => $operationID,
                 'informacion_vapor_id' => $informacionVaporID,
-                'analisis_id' => $analisisID,
+                'analisis_id' => $analisisID??null,
                 'pesaje_id' => $pesajeID,
                 'archivos_id' => $archivoID,
             ]);
             $this->updateCapacitySilo($requestCreate, $request["movimiento"]);
         }
+    }
+
+    private function validate_service(Request $request, string $service_name): bool
+    {
+        $service_id = $request->servicio_id;
+        return Service::where('name', $service_name)->first()->id == $service_id;
     }
 
     private function updateCapacitySilo(Request $request, string $movement){
