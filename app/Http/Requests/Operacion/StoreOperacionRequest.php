@@ -4,6 +4,7 @@ namespace App\Http\Requests\Operacion;
 
 use App\Models\Service;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreOperacionRequest extends FormRequest
 {
@@ -23,13 +24,20 @@ class StoreOperacionRequest extends FormRequest
     public function rules(): array
     {
         $service_almacenamiento_id = Service::where('name', 'Almacenamiento')->first()->id;
+        $service_pesaje_id = Service::where('name', 'Pesaje')->first()->id;
         return [
-            'movimiento' => 'required|string|in:remision,ingreso',
+            'movimiento' => 'required|string|in:remision,ingreso,pesaje',
             'estado' => 'required|string|in:en_proceso,finalizado,cancelada',
             'numero_documento' => 'required|string|max:255',
             'fecha_registro' => 'required|date',
             'hora_entrada' => 'required|date_format:H:i:s',
-            'hora_salida' => 'date_format:H:i:s|nullable|required_if:estado,finalizado',
+            'hora_salida' => [
+                'date_format:H:i:s',
+                'nullable',
+                Rule::requiredIf(function () {
+                    return $this->estado == 'finalizado' && $this->movimiento != 'pesaje';
+                }),
+            ],
             'nombre_conductor' => 'string|max:255|nullable',
             'cedula_conductor' => 'string|max:255|nullable',
             'placa_vehiculo' => 'string|max:255|nullable',
@@ -48,12 +56,12 @@ class StoreOperacionRequest extends FormRequest
             'detalles_operacion.*.peso_segun_puerto' => 'numeric|nullable|required_if:detalles_operacion.*.origen,barco',
             'detalles_operacion.*.UM_segun_puerto' => 'string|in:kg,qq,ton|nullable|required_if:detalles_operacion.*.origen,barco',
             // Analisis
-            'detalles_operacion.*.temperatura' => 'numeric|min:0|max:999|required_if:estado,finalizado',
-            'detalles_operacion.*.humedad' => 'numeric|min:0|max:9999|required_if:estado,finalizado',
-            'detalles_operacion.*.impurezas' => 'numeric|min:0|max:9999|required_if:estado,finalizado',
-            'detalles_operacion.*.grano_quebrado' => 'integer|min:0|required_if:estado,finalizado',
-            'detalles_operacion.*.grano_no_desarrollado' => 'integer|min:0|required_if:estado,finalizado',
-            'detalles_operacion.*.hongo' => 'integer|min:0|required_if:estado,finalizado',
+            'detalles_operacion.*.temperatura' => 'numeric|min:0|max:999|required_if:detalles_operacion.*.servicio_id,'.$service_pesaje_id,
+            'detalles_operacion.*.humedad' => 'numeric|min:0|max:9999|required_if:detalles_operacion.*.servicio_id,'.$service_pesaje_id,
+            'detalles_operacion.*.impurezas' => 'numeric|min:0|max:9999|required_if:detalles_operacion.*.servicio_id,'.$service_pesaje_id,
+            'detalles_operacion.*.grano_quebrado' => 'integer|min:0|required_if:detalles_operacion.*.servicio_id,'.$service_pesaje_id,
+            'detalles_operacion.*.grano_no_desarrollado' => 'integer|min:0|required_if:detalles_operacion.*.servicio_id,'.$service_pesaje_id,
+            'detalles_operacion.*.hongo' => 'integer|min:0|required_if:detalles_operacion.*.servicio_id,'.$service_pesaje_id,
             // Pesaje
             'detalles_operacion.*.peso_bruto' => 'numeric|min:0|max:99999999|nullable|required_if:estado,finalizado',
             'detalles_operacion.*.peso_tara' => 'numeric|min:0|max:99999999|nullable|required_if:estado,finalizado',
