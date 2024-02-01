@@ -8,6 +8,8 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 
 class exportReciboIngreso implements WithEvents, ShouldAutoSize
@@ -30,9 +32,9 @@ class exportReciboIngreso implements WithEvents, ShouldAutoSize
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 //valores originales
-                $event->sheet->setCellValue('E1', "RECIBO DE INGRESO");
-                $event->sheet->setCellValue('E2', "ANPROSOR");
-                $event->sheet->setCellValue('E3', "CHICHIGALPA");
+                $event->sheet->setCellValue('E1', "             RECIBO DE INGRESO");
+                $event->sheet->setCellValue('E2', "     ANPROSOR");
+                $event->sheet->setCellValue('E3', "     CHICHIGALPA");
                 $event->sheet->setCellValue('E5', "RECIBO No:");
                 $event->sheet->setCellValue('E7', "FECHA:");
                 $event->sheet->setCellValue('E9', "ENTRADA:");
@@ -164,6 +166,15 @@ class exportReciboIngreso implements WithEvents, ShouldAutoSize
                 $event->sheet->getStyle('E22:G25')->applyFromArray($styleBorders);
                 $event->sheet->getStyle('E33:F33')->applyFromArray($styleBorders);
                 $event->sheet->getStyle('E34:G36')->applyFromArray($styleBorders);
+
+                $drawing = new Drawing();
+                $drawing->setName('Logo');
+                $drawing->setDescription('Logo');
+                $drawing->setPath(public_path('logo.png')); // Reemplaza con la ruta real de tu imagen
+                $drawing->setCoordinates('E1');
+                $drawing->setHeight(50);
+                $drawing->setWorksheet($event->sheet->getDelegate());
+
             },
         ];
     
