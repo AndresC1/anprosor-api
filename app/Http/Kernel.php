@@ -68,4 +68,7 @@ class Kernel extends HttpKernel
         'check_permission' => \App\Http\Middleware\Permission\check_permission::class,
         'change_status_user' => \App\Http\Middleware\User\ChangeStatus::class,
     ];
+    protected $commands = [
+        \App\Console\Commands\ExportExcel::class,
+    ];
 }
